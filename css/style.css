@@ -10,16 +10,49 @@ body {
 	font-size: 150%;
 }
 
+/*-----UNIVERSAL-----*/
+button {
+	background: none;
+	border: 2px solid;
+	font-family: inherit;
+	color: inherit;
+	font-size: .9em;
+	border-radius: 2px;
+	padding: 10px 25px;
+}
+
+.currentMove {
+	color: #158FCB;
+	font-weight: bold;
+}
+
+
+
+/*-----LAYOUT-----*/
 header {
 	background: #2B303B;
 	padding: 20px;
-	text-align: center;
 	margin: 0 0 20px;
+	display: flex;
+	align-items: center;
 }
 
-header h1 span {
+header > div {
+	flex: 1;
+}
+
+header div#logo h1 span {
 	opacity: .1;
 	font-size: .75em;
+}
+
+header div#instructions {
+	text-align: center;
+}
+
+header div#playAgain {
+  	display: flex;
+  	justify-content: flex-end;
 }
 
 div#container {
@@ -33,9 +66,7 @@ div#container {
 	font-size: 250%;
 }
 
-.nowPlaying .currentMove {
-	color: #158FCB;
-}
+
 
 div#gameBoard {
 	display: flex;
@@ -44,8 +75,27 @@ div#gameBoard {
 }
 
 div#gameBoard  * {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 7em;
 	height: 7em;
-	background-image: radial-gradient(rgba(0,0,0,.5) 5%, rgba(255,255,255,.0) 0%);
+}
+
+div#gameBoard div {
+	background: url('../img/dot.svg') no-repeat center;
+	background-size: 8%;
+}
+
+span.play {
+	font-size: 2em;
+	font-weight: bold;
+	line-height: 0;
+	position: relative;
+	top: 5px;
+}
+
+span.play.winner {
+	color: #DDDD37;
 }
 
