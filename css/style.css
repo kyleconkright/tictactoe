@@ -1,0 +1,51 @@
+* {padding: 0; margin: 0;}
+
+*,*:before,*:after {box-sizing: border-box;}
+
+body {
+	background: #1C1F26;
+	color: #DFE1E8;
+	min-height: 100vh;
+	font-family: minimo;
+	font-size: 150%;
+}
+
+header {
+	background: #2B303B;
+	padding: 20px;
+	text-align: center;
+	margin: 0 0 20px;
+}
+
+header h1 span {
+	opacity: .1;
+	font-size: .75em;
+}
+
+div#container {
+	display: flex;
+}
+
+.nowPlaying {
+	flex: 1;
+	align-self: center;
+	text-align: center;
+	font-size: 250%;
+}
+
+.nowPlaying .currentMove {
+	color: #158FCB;
+}
+
+div#gameBoard {
+	display: flex;
+	flex-wrap: wrap;
+	width: 21em;
+}
+
+div#gameBoard  * {
+	width: 7em;
+	height: 7em;
+	background-image: radial-gradient(rgba(0,0,0,.5) 5%, rgba(255,255,255,.0) 0%);
+}
+
