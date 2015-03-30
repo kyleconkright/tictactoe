@@ -35,81 +35,73 @@ button {
 }
 
 
-/*-----LAYOUT-----*/
+/*-----HEADER-----*/
 header {
 	background: #2B303B;
 	padding: 20px;
 	margin: 0 0 20px;
 	display: flex;
 	align-items: center;
+	> div {
+		flex: 1;
+	}
+	div#logo h1 {
+		background: linear-gradient(to right,#2989d8 0,#22ad3c 33%,#7ece29 66%,#7db9e8 100%);
+	  	-webkit-background-clip: text;
+	  	-webkit-text-fill-color: transparent;
+	  	span {
+			opacity: .5;
+			font-size: .75em;
+		}
+	}
+	div#instructions {
+		text-align: center;
+	}
+	div#playAgain {
+	  	display: flex;
+	  	justify-content: flex-end;
+	}
 }
 
-header > div {
-	flex: 1;
-}
-
-header div#logo h1 {
-	background: linear-gradient(to right,#2989d8 0,#22ad3c 33%,#7ece29 66%,#7db9e8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-header div#logo h1 span {
-	opacity: .5;
-	font-size: .75em;
-}
-
-header div#instructions {
-	text-align: center;
-}
-
-header div#playAgain {
-  	display: flex;
-  	justify-content: flex-end;
-}
-
+/*-----CONTAINER-----*/
 div#container {
 	display: flex;
+	.now-playing {
+		flex: 1;
+		align-self: center;
+		text-align: center;
+		font-size: 250%;
+	}
+	/*-----GAMEBOARD-----*/
+	div#game-board {
+		display: flex;
+		flex-wrap: wrap;
+		width: 21em;
+		* {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 7em;
+			height: 7em;
+		}
+		div {
+			background: url('../img/dot.svg') no-repeat center;
+			background-size: 8%;
+			cursor: pointer;
+		}
+	}
+	span.play {
+		font-size: 2em;
+		font-weight: bold;
+		line-height: 0;
+		position: relative;
+		top: 5px;
+	}
+
+	span.play.winner {
+		color: #DDDD37;
+	}
 }
 
-.nowPlaying {
-	flex: 1;
-	align-self: center;
-	text-align: center;
-	font-size: 250%;
-}
 
-
-
-div#gameBoard {
-	display: flex;
-	flex-wrap: wrap;
-	width: 21em;
-}
-
-div#gameBoard  * {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 7em;
-	height: 7em;
-}
-
-div#gameBoard div {
-	background: url('../img/dot.svg') no-repeat center;
-	background-size: 8%;
-	cursor: pointer;
-}
-
-span.play {
-	font-size: 2em;
-	font-weight: bold;
-	line-height: 0;
-	position: relative;
-	top: 5px;
-}
-
-span.play.winner {
-	color: #DDDD37;
-}
 
