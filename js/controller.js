@@ -2,50 +2,66 @@ angular
 	.module('app')
 	.controller('TheGame', TheGame);
 
-	function TheGame() {
+	TheGame.$inject = ['$firebaseArray','$firebaseObject'];
+
+
+
+	function TheGame($firebaseArray, $firebaseObject) {
 		var self = this;
 		
-		self.pieces = [];
+		self.setBoard = setBoard();
+		self.getInfo = getInfo();
+		self.setMove = setMove; 
 
 		self.intro = true;
 
-		self.setMove = setMove; 
-		self.testWinner = testWinner;
+		
 
-		self.announce = "let's play!"
+		// self.announce = "let's play!"
 
-		// set the board
-		for(var i = 0; i < 9; i++){
-			self.pieces.push({num: 1+i, move: ''})
-		};
-
-		function testWinner() {
-			console.log('hello');
-			if(self.pieces[0].move === self.pieces[1].move) {
-				console.log('yes')
-			}
+		function setBoard() {
+			var ref = new Firebase('https://tictackyle.firebaseio.com/pieces');
+			var pieces = $firebaseArray(ref);
+			return pieces;
 		}
+
+		function getInfo(){
+			var ref = new Firebase('https://tictackyle.firebaseio.com/info');
+			var info = $firebaseObject(ref);
+
+			info.announce = "Let's Play";
+
+
+			info.$save();
+
+			return info
+		}
+
 
 		// play the game
 		var count = 0;
 
 		function setMove(play) {
-			self.announce = "it's on!";
+
+			self.getInfo.announce = "it's on!";
 			
 			//place X
 			if (count % 2 === 0) {
 				if(play.move === '') {
 					play.move = 'X';
-					self.currentMove = true;
+					self.getInfo.currentMove = true;
+					self.getInfo.$save();
+					self.setBoard.$save();
 					count++;
-					testWinner();
 				}
 				
 			//place O	
 			} else {
 				if(play.move === '') {
 					play.move = 'O';
-					self.currentMove = false;
+					self.getInfo.currentMove = false;
+					self.getInfo.$save();
+					self.setBoard.$save();
 					count++;
 				}
 			}

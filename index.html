@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-	<title>Tic, Tac, Toe - branch</title>
+	<title>Tic, Tac, Toe</title>
 	<link rel="stylesheet" type="text/css" href="css/style.min.css">
 	<script type="text/javascript" src="js/angular.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+	<script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script type="text/javascript" src="js/controller.js"></script>
 </head>
@@ -15,7 +17,7 @@
 		</div>
 
 		<div id="instructions">
-			<p>{{game.announce}}</p><p>it's your turn <span ng-show="!game.currentMove">X</span><span ng-show="game.currentMove">O</span>.</p>
+			<p>{{game.getInfo.announce}}</p><p>it's your turn <span ng-show="!game.getInfo.currentMove">X</span><span ng-show="game.getInfo.currentMove">O</span>.</p>
 		</div>
 		
 		<div id="playAgain">
@@ -27,20 +29,20 @@
 	<div id="container">
 
 		<div class="now-playing" id="now-playingX">
-			<h2 ng-class="{currentMove: !game.currentMove}">X</h2>
+			<h2 ng-class="{currentMove: !game.getInfo.currentMove}">X</h2>
 			<h3 class="score">-</h3>
 		</div><!-- now-playingX -->
 
 
 		<div id="game-board">
-			<div ng-repeat="piece in game.pieces">
+			<div ng-repeat="piece in game.setBoard">
 				<div ng-click="game.setMove(piece)" class="piece piece-{{piece.num}}"><h3>{{piece.move}}</h3></div><!-- piece -->
 			</div>
 		</div><!-- gameBoard -->
 
 
 		<div class="now-playing" id="now-playingO">
-			<h2 ng-class="{currentMove: game.currentMove}">O</h2>
+			<h2 ng-class="{currentMove: game.getInfo.currentMove}">O</h2>
 			<h3 class="score">-</h3>
 		</div><!-- nowPlayingO -->
 
