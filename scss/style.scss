@@ -10,6 +10,9 @@
 }
 *,*:before,*:after {box-sizing: border-box;}
 
+$space: 16px;
+
+
 body {
 	background: #1C1F26;
 	color: #DFE1E8;
@@ -27,6 +30,7 @@ button {
 	font-size: .9em;
 	border-radius: 2px;
 	padding: 10px 25px;
+	cursor: pointer;
 }
 
 .currentMove {
@@ -71,6 +75,16 @@ div#container {
 		align-self: center;
 		text-align: center;
 		font-size: 250%;
+		input {
+			outline: none;
+			border: none;
+			background: none;
+			font-size: .5em;
+			font-family: inherit;
+			text-align: center;
+			padding: $space;
+			color: #f6f6f6;
+		}
 	}
 	/*-----GAMEBOARD-----*/
 	div#game-board {
