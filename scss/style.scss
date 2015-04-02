@@ -85,6 +85,10 @@ div#container {
 			padding: $space;
 			color: #f6f6f6;
 		}
+		h3.score {
+			background: #666;
+			padding: $space/2;
+		}
 	}
 	/*-----GAMEBOARD-----*/
 	div#game-board {

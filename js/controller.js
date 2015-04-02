@@ -10,6 +10,7 @@ angular
 		var self = this;
 		self.gamePlay = gamePlay();
 		self.setMove = setMove;
+		self.getWinner = getWinner;
 		self.resetGame = resetGame;
 		self.sendChat = sendChat;
 
@@ -26,43 +27,100 @@ angular
 
 			gameData.currentMove = true;
 			gameData.announce = "Let's Play!";
+			gameData.playerTurn = 'X gets the first move...';
+			gameData.scoreX = 0;
+			gameData.scoreO = 0;
 			gameData.clearBoard = true;
 			gameData.playAgain = false;
 			gameData.chatBoxX = null;
 			gameData.chatBoxO = null;
 
-			gameData.$loaded(function(){
-				gameData.$save();
-			});
 
-			// gameData.$save();
+			// gameData.$loaded(function(){
+			// 	gameData.$save();
+			// });
+
+			gameData.$save();
 			
 			return gameData;
 		}
 
 
+
+		//////////////////////////////////////////
+		/////////SET MOVE AKA THE BRAIN //////////
+		//////////////////////////////////////////
 		function setMove(play) {
-			self.gamePlay.announce = "Ok! Let's Go!"
+			
+			self.gamePlay.announce = ""
 			self.gamePlay.clearBoard = true;
+
 			if(self.gamePlay.currentMove === true) {
 				if(play.move === '') {
 					play.move = 'X';
 					self.gamePlay.currentMove = false;
+					self.gamePlay.playerTurn = 'Your move O';
+					if(self.getWinner(play) === play.move) {
+						console.log(play.move + ' wins');
+						self.gamePlay.scoreX++;
+					}
 					self.gamePlay.$save();
 				}
 			} else {
 				if(play.move === '') {
 					play.move = 'O';
 					self.gamePlay.currentMove = true;
+					self.gamePlay.playerTurn = 'Your move X';
+					self.getWinner(play);
+					if(self.getWinner(play) === play.move) {
+						console.log(play.move + ' wins');
+						self.gamePlay.scoreO++;
+					}
 					self.gamePlay.$save();
 				}
 			}
-		}
+		}// end set move
 
+
+		//////////////////////////////
+		/////////TEST WINNER//////////
+		//////////////////////////////
+		function getWinner(play) {
+			var space = self.gamePlay.spaces;
+
+			if(
+				space[0].move !== '' && space[0].move === space[1].move && space[1].move === space[2].move ||
+				space[3].move !== '' && space[3].move === space[4].move && space[4].move === space[5].move ||
+				space[6].move !== '' && space[6].move === space[7].move && space[7].move === space[8].move
+				) {
+				return play.move;
+			} else if(
+				space[0].move !== '' && space[0].move === space[3].move && space[3].move === space[6].move ||
+				space[1].move !== '' && space[1].move === space[4].move && space[4].move === space[7].move ||
+				space[2].move !== '' && space[2].move === space[5].move && space[5].move === space[8].move
+				) {
+				return play.move;	
+			} else if (
+				space[0].move !== '' && space[0].move === space[4].move && space[4].move === space[8].move
+				) {
+				return play.move;	
+			} else if (
+				space[2].move !== '' && space[2].move === space[4].move && space[4].move === space[6].move
+				) {
+				return play.move;	
+			}
+
+		} // end get winner
+
+
+
+
+
+		//////////////////////////////
+		////////CHAT FEATURE//////////
+		//////////////////////////////
 		function sendChat(text) {
-			self.chatBoxX = text;
 			self.gamePlay.$save();
-			self.chatBoxX = null;
 		}
 
 		function resetGame(arr){
@@ -70,10 +128,11 @@ angular
 				console.log(arr[i].move = '');
 			}
 			self.gamePlay.announce = "Let's Play!";
+			self.gamePlay.playerTurn = 'X gets the first move...';
 			self.gamePlay.currentMove = true;
 			self.gamePlay.clearBoard = false;
-			gameData.chatBoxX = null;
-			gameData.chatBoxO = null;
+			self.gamePlay.chatBoxX = null;
+			self.gamePlay.chatBoxO = null;
 
 			self.gamePlay.$save();
 		}
