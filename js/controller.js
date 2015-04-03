@@ -14,6 +14,7 @@ angular
 		self.resetGame = resetGame;
 		self.sendChat = sendChat;
 
+
 		
 		function gamePlay(){
 			var ref = new Firebase('https://tictackyle.firebaseio.com/');
@@ -30,6 +31,7 @@ angular
 			gameData.playerTurn = 'X gets the first move...';
 			gameData.scoreX = 0;
 			gameData.scoreO = 0;
+			gameData.count = 0;
 			gameData.testWin = false;
 			gameData.playAgain = true;
 			gameData.playAgain = false;
@@ -51,6 +53,9 @@ angular
 		//////////////////////////////////////////
 		/////////SET MOVE AKA THE BRAIN //////////
 		//////////////////////////////////////////
+		
+		
+
 		function setMove(play) {
 			
 			self.gamePlay.announce = "";
@@ -62,12 +67,18 @@ angular
 						play.move = 'X';
 						self.gamePlay.currentMove = false;
 						self.gamePlay.playerTurn = 'Your move O';
+						self.gamePlay.count++;
 						if(self.getWinner(play) === play.move) {
 							self.gamePlay.testWin = true;
 							self.gamePlay.announce = play.move + ' Wins!!'
 							self.gamePlay.playerTurn = '';
 							self.gamePlay.playAgain = true;
 							self.gamePlay.scoreX++;
+						}
+						if(self.gamePlay.count === 9 && !self.getWinner()) {
+							self.gamePlay.announce = 'A tie... lame.'
+							self.gamePlay.playerTurn = 'play again and settle this!';
+							self.gamePlay.playAgain = true;
 						}
 						self.gamePlay.$save();
 					}
@@ -77,11 +88,12 @@ angular
 						self.gamePlay.currentMove = true;
 						self.gamePlay.playerTurn = 'Your move X';
 						self.getWinner(play);
+						self.gamePlay.count++;
 						if(self.getWinner(play) === play.move) {
 							self.gamePlay.announce = play.move + ' Wins!!'
 							self.gamePlay.playerTurn = '';
 							self.gamePlay.playAgain = true;
-							self.gamePlay.scoreO++;
+							self.gamePlay.scoreO++;	
 						}
 						self.gamePlay.$save();
 					}
@@ -95,7 +107,6 @@ angular
 		//////////////////////////////
 		function getWinner(play) {
 			var space = self.gamePlay.spaces;
-
 			if(
 				space[0].move !== '' && space[0].move === space[1].move && space[1].move === space[2].move ||
 				space[3].move !== '' && space[3].move === space[4].move && space[4].move === space[5].move ||
@@ -127,6 +138,8 @@ angular
 		//////////////////////////////
 		////////CHAT FEATURE//////////
 		//////////////////////////////
+
+		//custom shortcut to reset game
 		function sendChat(text) {
 			if(self.gamePlay.chatBoxX === 'clearScore' || self.gamePlay.chatBoxO === 'clearScore') {
 				self.gamePlay.scoreO = 0;
@@ -134,9 +147,10 @@ angular
 				self.gamePlay.chatBoxX = null;
 				self.gamePlay.chatBoxO = null;
 			}
-			self.gamePlay.$save();
 			self.gamePlay.chatBoxX = null;
 			self.gamePlay.chatBoxO = null;
+			self.gamePlay.$set(self.gamePlay.chatBoxX);
+			self.gamePlay.$set(self.gamePlay.chatBoxO);
 		}
 
 		function resetGame(arr){
@@ -147,6 +161,7 @@ angular
 			self.gamePlay.playerTurn = 'X gets the first move...';
 			self.gamePlay.currentMove = true;
 			self.gamePlay.playAgain = false;
+			self.gamePlay.count = 0;
 
 			self.gamePlay.$save();
 		}

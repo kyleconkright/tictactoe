@@ -21,7 +21,7 @@
 		</div>
 		
 		<div id="playAgain">
-			<button ng-click="game.resetGame(game.gamePlay.spaces)" ng-show="game.gamePlay.playAgain">Play Again?</button>
+			<button ng-click="game.resetGame(game.gamePlay.spaces)" ng-show="game.gamePlay.playAgain">Play Again</button>
 		</div>
 	</header>
 
@@ -37,7 +37,7 @@
 
 		<div id="game-board">
 			<div ng-repeat="piece in game.gamePlay.spaces">
-				<div ng-click="game.setMove(piece)" class="piece"><h3 ng-class="wincolor: testWin">{{piece.move}}</h3></div><!-- piece -->
+				<div ng-click="game.setMove(piece)" class="piece"><h3>{{piece.move}}</h3></div><!-- piece -->
 			</div>
 		</div><!-- gameBoard -->
 
