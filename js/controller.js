@@ -30,17 +30,18 @@ angular
 			gameData.playerTurn = 'X gets the first move...';
 			gameData.scoreX = 0;
 			gameData.scoreO = 0;
-			gameData.clearBoard = true;
+			gameData.testWin = false;
+			gameData.playAgain = true;
 			gameData.playAgain = false;
 			gameData.chatBoxX = null;
 			gameData.chatBoxO = null;
 
 
-			// gameData.$loaded(function(){
-			// 	gameData.$save();
-			// });
+			gameData.$loaded(function(){
+				gameData.$save();
+			});
 
-			gameData.$save();
+			// gameData.$save();
 			
 			return gameData;
 		}
@@ -52,31 +53,38 @@ angular
 		//////////////////////////////////////////
 		function setMove(play) {
 			
-			self.gamePlay.announce = ""
-			self.gamePlay.clearBoard = true;
+			self.gamePlay.announce = "";
+			
+			if(!self.getWinner()) { //ONLY ALLOW CLICKS WHEN THERE IS NO WINNER
 
-			if(self.gamePlay.currentMove === true) {
-				if(play.move === '') {
-					play.move = 'X';
-					self.gamePlay.currentMove = false;
-					self.gamePlay.playerTurn = 'Your move O';
-					if(self.getWinner(play) === play.move) {
-						console.log(play.move + ' wins');
-						self.gamePlay.scoreX++;
+				if(self.gamePlay.currentMove === true) {
+					if(play.move === '') {
+						play.move = 'X';
+						self.gamePlay.currentMove = false;
+						self.gamePlay.playerTurn = 'Your move O';
+						if(self.getWinner(play) === play.move) {
+							self.gamePlay.testWin = true;
+							self.gamePlay.announce = play.move + ' Wins!!'
+							self.gamePlay.playerTurn = '';
+							self.gamePlay.playAgain = true;
+							self.gamePlay.scoreX++;
+						}
+						self.gamePlay.$save();
 					}
-					self.gamePlay.$save();
-				}
-			} else {
-				if(play.move === '') {
-					play.move = 'O';
-					self.gamePlay.currentMove = true;
-					self.gamePlay.playerTurn = 'Your move X';
-					self.getWinner(play);
-					if(self.getWinner(play) === play.move) {
-						console.log(play.move + ' wins');
-						self.gamePlay.scoreO++;
+				} else {
+					if(play.move === '') {
+						play.move = 'O';
+						self.gamePlay.currentMove = true;
+						self.gamePlay.playerTurn = 'Your move X';
+						self.getWinner(play);
+						if(self.getWinner(play) === play.move) {
+							self.gamePlay.announce = play.move + ' Wins!!'
+							self.gamePlay.playerTurn = '';
+							self.gamePlay.playAgain = true;
+							self.gamePlay.scoreO++;
+						}
+						self.gamePlay.$save();
 					}
-					self.gamePlay.$save();
 				}
 			}
 		}// end set move
@@ -120,19 +128,25 @@ angular
 		////////CHAT FEATURE//////////
 		//////////////////////////////
 		function sendChat(text) {
+			if(self.gamePlay.chatBoxX === 'clearScore' || self.gamePlay.chatBoxO === 'clearScore') {
+				self.gamePlay.scoreO = 0;
+				self.gamePlay.scoreX = 0;
+				self.gamePlay.chatBoxX = null;
+				self.gamePlay.chatBoxO = null;
+			}
 			self.gamePlay.$save();
+			self.gamePlay.chatBoxX = null;
+			self.gamePlay.chatBoxO = null;
 		}
 
 		function resetGame(arr){
 			for(var i = 0; i < arr.length; i++) {
-				console.log(arr[i].move = '');
+				arr[i].move = '';
 			}
 			self.gamePlay.announce = "Let's Play!";
 			self.gamePlay.playerTurn = 'X gets the first move...';
 			self.gamePlay.currentMove = true;
-			self.gamePlay.clearBoard = false;
-			self.gamePlay.chatBoxX = null;
-			self.gamePlay.chatBoxO = null;
+			self.gamePlay.playAgain = false;
 
 			self.gamePlay.$save();
 		}

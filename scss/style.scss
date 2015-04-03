@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Varela+Round);
+
 * {padding: 0; margin: 0; outline: none;}
 /*disable select*/
 * {
@@ -17,8 +19,8 @@ body {
 	background: #1C1F26;
 	color: #DFE1E8;
 	min-height: 100vh;
-	font-family: minimo;
-	font-size: 150%;
+	font-family: Varela Round;
+	font-size: 140%;
 }
 
 /*-----UNIVERSAL-----*/
@@ -42,8 +44,8 @@ button {
 /*-----HEADER-----*/
 header {
 	background: #2B303B;
-	padding: 20px;
-	margin: 0 0 20px;
+	padding: $space*1.5;
+	margin: 0 0 $space*2;
 	display: flex;
 	align-items: center;
 	> div {
@@ -85,9 +87,14 @@ div#container {
 			padding: $space;
 			color: #f6f6f6;
 		}
-		h3.score {
-			background: #666;
-			padding: $space/2;
+		.score {
+			background: rgba(0,0,0,.25);
+			padding: $space/1.25 $space/2 $space/2;
+			font-size: .75em;
+			color: #2B303A;
+			border-radius: 8px;
+			width: 80px;
+			margin: 0 auto;
 		}
 	}
 	/*-----GAMEBOARD-----*/
@@ -102,10 +109,13 @@ div#container {
 			width: 7em;
 			height: 7em;
 		}
-		div {
+		div.piece {
 			background: url('../img/dot.svg') no-repeat center;
 			background-size: 8%;
 			cursor: pointer;
+		}
+		.wincolor {
+			color: red;
 		}
 	}
 	span.play {

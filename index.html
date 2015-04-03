@@ -21,8 +21,7 @@
 		</div>
 		
 		<div id="playAgain">
-			<button ng-click="game.resetGame(game.gamePlay.spaces)" ng-show="game.gamePlay.clearBoard">reset board</button>
-			<button ng-show="game.gamePlay.playAgain">play again</button>
+			<button ng-click="game.resetGame(game.gamePlay.spaces)" ng-show="game.gamePlay.playAgain">Play Again?</button>
 		</div>
 	</header>
 
@@ -32,13 +31,13 @@
 		<div class="now-playing" id="now-playingX">
 			<form ng-submit="game.sendChat(text)"><input ng-model="game.gamePlay.chatBoxX" type="text" placeholder="chat here..."></form>
 			<h2 ng-class="{currentMove: game.gamePlay.currentMove}">X</h2>
-			<h3 class="score">{{game.gamePlay.scoreX}}</h3>
+			<div class="score"><h3>{{game.gamePlay.scoreX}}</h3></div>
 		</div><!-- now-playingX -->
 
 
 		<div id="game-board">
 			<div ng-repeat="piece in game.gamePlay.spaces">
-				<div ng-click="game.setMove(piece)" class="piece"><h3>{{piece.move}}</h3></div><!-- piece -->
+				<div ng-click="game.setMove(piece)" class="piece"><h3 ng-class="wincolor: testWin">{{piece.move}}</h3></div><!-- piece -->
 			</div>
 		</div><!-- gameBoard -->
 
@@ -46,7 +45,7 @@
 		<div class="now-playing" id="now-playingO">
 			<form ng-submit="game.sendChat(text)"><input ng-model="game.gamePlay.chatBoxO" type="text" placeholder="chat here..."></form>
 			<h2 ng-class="{currentMove: !game.gamePlay.currentMove}">O</h2>
-			<h3 class="score">{{game.gamePlay.scoreO}}</h3>
+			<div class="score"><h3>{{game.gamePlay.scoreO}}</h3></div>
 		</div><!-- nowPlayingO -->
 
 	</div><!-- container -->
