@@ -157,14 +157,18 @@ angular
 				if(self.gamePlay.chatBox === 'clearScore') {
 					self.gamePlay.scoreO = 0;
 					self.gamePlay.scoreX = 0;
-					self.gamePlay.chatBox = '';
+					self.gamePlay.chatBox = undefined;
+					self.gamePlay.$save();
 				} else if (self.gamePlay.chatBox === 'clearChat') {
-					self.gamePlay.chatDisplay = undefined;
+					self.gamePlay.chatDisplay = '';
+					self.gamePlay.chatBox = '';
+					self.gamePlay.$save();
 				} else {
 					self.gamePlay.chatDisplay = text + '\n' +  self.gamePlay.chatDisplay;
-					self.gamePlay.chatBox = undefined;
+					self.gamePlay.chatBox = '';
+					self.gamePlay.$save();
 				}
-				self.gamePlay.$save();
+				
 			}
 		}
 
