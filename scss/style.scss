@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Varela+Round);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
 * {padding: 0; margin: 0; outline: none;}
 /*disable select*/
@@ -12,12 +12,17 @@
 }
 *,*:before,*:after {box-sizing: border-box;}
 
-$space: 16px;
+$space: 2%;
+$darkgrey: #1A1D24;
+$lightgrey: #2B3039;
+$blue: #158FCB;
+$black: #14161B;
+$white: #DFE1E8;
 
 
 body {
-	background: #1C1F26;
-	color: #DFE1E8;
+	background: $darkgrey;
+	color: $white;
 	min-height: 100vh;
 	font-family: Varela Round;
 	font-size: 140%;
@@ -36,28 +41,25 @@ button {
 }
 
 .currentMove {
-	color: #158FCB;
+	color: $blue;
 	font-weight: bold;
 }
 
 
 /*-----HEADER-----*/
 header {
-	background: #2B303B;
-	padding: $space*1.5;
-	margin: 0 0 $space*2;
+	background: $lightgrey;
+	padding: $space;
 	display: flex;
 	align-items: center;
 	> div {
 		flex: 1;
 	}
 	div#logo h1 {
-	// 		background: linear-gradient(to right,#2989d8 0,#22ad3c 33%,#7ece29 66%,#7db9e8 100%);
- 	//  	-webkit-background-clip: text;
- 	//  	-webkit-text-fill-color: transparent;
 	  	span {
-			opacity: .5;
+			opacity: .25;
 			font-size: .75em;
+			margin: 0 $space/4;
 		}
 	}
 	div#instructions {
@@ -69,67 +71,97 @@ header {
 	}
 }
 
+/*-----NAV-----*/
+
+nav {
+	text-align: right;
+	padding: $space;
+	span {
+		color: $lightgrey;
+		text-shadow: 0 0 1px $black;
+		cursor: pointer;
+		transition: color .2s;
+	}
+	span:hover {
+		transform: scale(1.1);
+		color: $blue;
+	}
+}
+
 /*-----CONTAINER-----*/
+
 div#container {
 	display: flex;
-	.now-playing {
+	> * {
 		flex: 1;
+		text-align: center;
+	}
+	div#game-board {
+		flex: 1.5;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		div.piece {
+			width: 33.333333%;
+			height: 150px;
+			background: url('../img/dot.svg') no-repeat center;
+			background-size: 5%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2em;
+			cursor: pointer;
+			transition: all .2s;
+			&:hover {
+				background-size: 8%;
+			}
+		}
+	}
+	div.now-playing {
 		align-self: center;
 		text-align: center;
-		font-size: 250%;
-		input {
-			outline: none;
-			border: none;
-			background: none;
-			font-size: .5em;
-			font-family: inherit;
-			text-align: center;
-			padding: $space;
-			color: #f6f6f6;
-		}
+		font-size: 200%;
 		.score {
 			background: rgba(0,0,0,.25);
 			padding: $space/1.25 $space/2 $space/2;
 			font-size: .75em;
-			color: #2B303A;
+			color: $lightgrey;
 			border-radius: 8px;
 			width: 80px;
 			margin: 0 auto;
 		}
 	}
-	/*-----GAMEBOARD-----*/
-	div#game-board {
-		display: flex;
-		flex-wrap: wrap;
-		width: 21em;
-		* {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 7em;
-			height: 7em;
-		}
-		div.piece {
-			background: url('../img/dot.svg') no-repeat center;
-			background-size: 8%;
-			cursor: pointer;
-		}
-		.wincolor {
-			color: red;
-		}
-	}
-	span.play {
-		font-size: 2em;
-		font-weight: bold;
-		line-height: 0;
-		position: relative;
-		top: 5px;
-	}
 
-	span.play.winner {
-		color: #DDDD37;
+	/* CHAT */
+
+
+
+	div#chat {
+		text-align: left;
+		padding: 0 $space;
+		transition: .7s all;
+		input, textarea {
+			background: none;
+			border: none;
+			font-size: inherit;
+			color: inherit;
+			font-family: inherit;
+		}
+		textarea {
+			height: 300px;
+			resize: none;
+		}
 	}
-}
+	div#chat.close {
+		display: none;
+		flex: 0;
+	}
+	div#chat.open {
+		display: block;
+		flex: 1;
+	}
+}/* end container */
+
 
 
 

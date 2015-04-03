@@ -12,7 +12,10 @@ angular
 		self.setMove = setMove;
 		self.getWinner = getWinner;
 		self.resetGame = resetGame;
+		self.chatPanel = chatPanel;
 		self.sendChat = sendChat;
+		
+		self.chatOpen;
 
 
 		
@@ -32,11 +35,9 @@ angular
 			gameData.scoreX = 0;
 			gameData.scoreO = 0;
 			gameData.count = 0;
-			gameData.testWin = false;
 			gameData.playAgain = true;
-			gameData.playAgain = false;
-			gameData.chatBoxX = null;
-			gameData.chatBoxO = null;
+			
+			gameData.chatDisplay = undefined;
 
 
 			gameData.$loaded(function(){
@@ -139,18 +140,32 @@ angular
 		////////CHAT FEATURE//////////
 		//////////////////////////////
 
+		
+
+		function chatPanel() {
+			
+			if(self.chatOpen === true) {
+				self.chatOpen = false;
+			} else {
+				self.chatOpen = true;
+			}
+		}
+
 		//custom shortcut to reset game
 		function sendChat(text) {
-			if(self.gamePlay.chatBoxX === 'clearScore' || self.gamePlay.chatBoxO === 'clearScore') {
-				self.gamePlay.scoreO = 0;
-				self.gamePlay.scoreX = 0;
-				self.gamePlay.chatBoxX = null;
-				self.gamePlay.chatBoxO = null;
+			if(self.gamePlay.chatBox !== undefined) {
+				if(self.gamePlay.chatBox === 'clearScore') {
+					self.gamePlay.scoreO = 0;
+					self.gamePlay.scoreX = 0;
+					self.gamePlay.chatBox = '';
+				} else if (self.gamePlay.chatBox === 'clearChat') {
+					self.gamePlay.chatDisplay = undefined;
+				} else {
+					self.gamePlay.chatDisplay = text + '\n' +  self.gamePlay.chatDisplay;
+					self.gamePlay.chatBox = undefined;
+				}
+				self.gamePlay.$save();
 			}
-			self.gamePlay.chatBoxX = null;
-			self.gamePlay.chatBoxO = null;
-			self.gamePlay.$set(self.gamePlay.chatBoxX);
-			self.gamePlay.$set(self.gamePlay.chatBoxO);
 		}
 
 		function resetGame(arr){
@@ -162,7 +177,6 @@ angular
 			self.gamePlay.currentMove = true;
 			self.gamePlay.playAgain = false;
 			self.gamePlay.count = 0;
-
 			self.gamePlay.$save();
 		}
 
