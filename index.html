@@ -27,7 +27,7 @@
 	</header>
 
 	<nav>
-		<span id="trigger" ng-model="game.chatOpen" ng-click="game.chatPanel();"><i class="fa fa-comments"></i></span>
+		<span id="trigger" ng-model="game.chatOpen" ng-click="game.chatPanel();" ng-class="{notify: game.gamePlay.chatNotify}"><i class="fa fa-comments"></i></span>
 	</nav>
 
 
