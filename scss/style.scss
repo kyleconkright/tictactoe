@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
-* {padding: 0; margin: 0; outline: none;}
+* {padding: 0; margin: 0; outline: none; list-style-type: none;}
 /*disable select*/
 * {
 	-webkit-touch-callout: none;
@@ -112,9 +112,9 @@ div#container {
 			align-items: center;
 			font-size: 2em;
 			cursor: pointer;
-			transition: all .2s;
+			transition: all .2s ease-in-out;
 			&:hover {
-				background-size: 8%;
+				background-size: 10%;
 			}
 		}
 	}
@@ -151,6 +151,25 @@ div#container {
 		textarea {
 			height: 300px;
 			resize: none;
+		}
+		input {
+			background: $lightgrey;
+			padding: 8px;
+			border-radius: 2px;
+		}
+		ul {
+			min-height: 50vh;
+		}
+		ul li {
+			padding: 8px;
+			border-radius: 2px;
+			margin: 0 0 2px;
+		}
+		.XX,.OO {
+			background: $blue;
+		}
+		.XO,.OX {
+
 		}
 	}
 	div#chat.close {

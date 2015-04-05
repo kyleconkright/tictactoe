@@ -18,7 +18,8 @@
 		</div>
 
 		<div id="instructions">
-			<p>{{game.gamePlay.announce}}</p><p>{{game.gamePlay.playerTurn}}</p>
+			<p>{{game.gamePlay.announce}}</p>
+			<p>{{game.gamePlay.playerTurnInfo}}</p>
 		</div>
 		
 		<div id="playAgain">
@@ -53,9 +54,12 @@
 			<div class="score"><h3>{{game.gamePlay.scoreO}}</h3></div>
 		</div><!-- nowPlayingO -->
 
-		<div id="chat" ng-class="{close : !game.chatOpen, open: game.chatOpen}">
+		<div id="chat" ng-class="{close: !game.chatOpen, open: game.chatOpen}">
 			<form ng-submit="game.sendChat(game.gamePlay.chatBox)">
-				<textarea ng-model="game.gamePlay.chatDisplay" disabled rows="60"></textarea>
+				<ul>
+					<li ng-repeat="chat in game.gamePlay.chatEntry.slice().reverse() | limitTo: 5" class="{{chat.player}}{{game.localPlayer}}">{{chat.entry}}</li>
+				</ul>
+				<!-- <textarea ng-model="game.gamePlay.chatDisplay" disabled rows="60"></textarea> -->
 				<input ng-model="game.gamePlay.chatBox" type="text" placeholder="chat here...">
 			</form>
 		</div>
